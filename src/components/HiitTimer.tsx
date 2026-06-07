@@ -233,10 +233,10 @@ export default function HiitTimer({ onStateChange }: { onStateChange?: (running:
       display: "flex", 
       flexDirection: "column", 
       alignItems: "center",
-      justifyContent: "center",
-      height: "100%",
-      position: "relative",
-      padding: "24px 24px 0 24px"
+      justifyContent: "space-between",
+      flex: 1,
+      width: "100%",
+      position: "relative"
     }}>
       {/* 確認モーダル */}
       {showConfirm && (
@@ -280,7 +280,7 @@ export default function HiitTimer({ onStateChange }: { onStateChange?: (running:
         zIndex: -1
       }} />
 
-      <div style={{ textAlign: "center", marginBottom: "48px" }}>
+      <div style={{ textAlign: "center", marginTop: "16px" }}>
         <h2 style={{ fontSize: "1.75rem", color: "var(--text-muted)", letterSpacing: "2px", marginBottom: "8px", fontWeight: "bold" }}>
           SET {currentSet} / {TOTAL_SETS}
         </h2>
@@ -301,8 +301,7 @@ export default function HiitTimer({ onStateChange }: { onStateChange?: (running:
         background: phase === "idle" ? "transparent" : "rgba(0,0,0,0.2)",
         backdropFilter: "blur(10px)",
         transition: "all 0.5s ease-in-out",
-        marginBottom: "auto",
-        marginTop: "20px"
+        margin: "auto 0"
       }}>
         {phase === "idle" ? (
           <span style={{ fontSize: "5.5rem", fontWeight: "900", color: "var(--text-muted)", letterSpacing: "-2px" }}>4:00</span>
@@ -311,7 +310,7 @@ export default function HiitTimer({ onStateChange }: { onStateChange?: (running:
         )}
       </div>
 
-      <div style={{ width: "100%", marginTop: "auto", marginBottom: "0px" }}>
+      <div style={{ width: "100%" }}>
         {phase === "idle" || phase === "done" ? (
           <button
             onClick={startTimer}
