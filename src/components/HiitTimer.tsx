@@ -18,6 +18,7 @@ export default function HiitTimer({ onStateChange }: { onStateChange?: (running:
   
   const wakeLockRef = useRef<WakeLockSentinel | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
+  const hasSubmittedRef = useRef(false);
 
   // Initialize Web Audio API on first user interaction to bypass autoplay restrictions
   const initAudioContext = () => {
@@ -154,10 +155,11 @@ export default function HiitTimer({ onStateChange }: { onStateChange?: (running:
 
   // Handle completion API call
   useEffect(() => {
-    if (phase === "done" && !isSubmitting) {
+    if (phase === "done" && !isSubmitting && !hasSubmittedRef.current) {
       const submitLog = async () => {
         try {
           setIsSubmitting(true);
+          hasSubmittedRef.current = true;
           const now = new Date();
           const dateStr = now.toLocaleDateString('ja-JP').split('/').join('-');
           const timeStr = now.toLocaleTimeString('ja-JP', { hour12: false });
@@ -204,6 +206,7 @@ export default function HiitTimer({ onStateChange }: { onStateChange?: (running:
     setTimeLeft(PREP_TIME);
     setCurrentSet(1);
     setIsPaused(false);
+    hasSubmittedRef.current = false;
   };
 
   const handleCancelClick = () => {
