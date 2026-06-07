@@ -280,7 +280,7 @@ export default function HiitTimer({ onStateChange }: { onStateChange?: (running:
         zIndex: -1
       }} />
 
-      <div style={{ textAlign: "center", marginTop: "16px" }}>
+      <div style={{ textAlign: "center", marginTop: "calc(16px + 3.5rem)" }}>
         <h2 style={{ fontSize: "1.75rem", color: "var(--text-muted)", letterSpacing: "2px", marginBottom: "8px", fontWeight: "bold" }}>
           SET {currentSet} / {TOTAL_SETS}
         </h2>
