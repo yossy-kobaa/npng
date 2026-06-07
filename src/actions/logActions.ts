@@ -1,27 +1,26 @@
 "use server";
 
-function getBaseUrl() {
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
-  }
-  return 'http://localhost:3001';
-}
+import { getSpreadsheet } from '@/lib/googleSheets';
 
 export async function submitHiitLogAction(date: string, timestamp: string) {
-  const res = await fetch(`${getBaseUrl()}/api/hiit-log`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.API_SECRET_KEY}`,
-    },
-    body: JSON.stringify({ date, timestamp }),
-  });
+  try {
+    const doc = await getSpreadsheet();
+    const sheet = doc.sheetsByTitle['hiit_logs'];
 
-  if (!res.ok) {
+    if (!sheet) {
+      throw new Error('hiit_logs sheet not found');
+    }
+
+    await sheet.addRow({
+      Date: date,
+      Timestamp: timestamp
+    });
+
+    return { success: true };
+  } catch (error: any) {
+    console.error('Error in submitHiitLogAction:', error);
     throw new Error('Failed to submit HIIT log');
   }
-
-  return res.json();
 }
 
 export async function submitMorningLogAction(data: {
@@ -32,18 +31,40 @@ export async function submitMorningLogAction(data: {
   bodyFat: number;
   timestamp: string;
 }) {
-  const res = await fetch(`${getBaseUrl()}/api/morning-log`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.API_SECRET_KEY}`,
-    },
-    body: JSON.stringify(data),
-  });
+  try {
+    const doc = await getSpreadsheet();
+    const sheet = doc.sheetsByTitle['morning_logs'];
 
-  if (!res.ok) {
+    if (!sheet) {
+      throw new Error('morning_logs sheet not found');
+    }
+
+    const rows = await sheet.getRows();
+    const existingRow = rows.find(row => row.get('Date') === data.date);
+
+    if (existingRow) {
+      // Update existing row
+      existingRow.set('SleepHours', data.sleepHours);
+      existingRow.set('Condition', data.condition);
+      existingRow.set('Weight', data.weight);
+      existingRow.set('BodyFat', data.bodyFat);
+      existingRow.set('Timestamp', data.timestamp);
+      await existingRow.save();
+    } else {
+      // Append new row
+      await sheet.addRow({
+        Date: data.date,
+        SleepHours: data.sleepHours,
+        Condition: data.condition,
+        Weight: data.weight,
+        BodyFat: data.bodyFat,
+        Timestamp: data.timestamp
+      });
+    }
+
+    return { success: true };
+  } catch (error: any) {
+    console.error('Error in submitMorningLogAction:', error);
     throw new Error('Failed to submit morning log');
   }
-
-  return res.json();
 }
