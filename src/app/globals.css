@@ -117,7 +117,7 @@ input[type="number"]:focus {
   display: flex;
   flex-direction: column;
   padding: 24px;
-  padding-bottom: 90px; /* Space for bottom nav */
+  padding-bottom: 125px; /* Space for bottom nav */
   max-width: 600px;
   margin: 0 auto;
   width: 100%;
@@ -128,7 +128,7 @@ input[type="number"]:focus {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 70px;
+  height: 105px;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -147,9 +147,9 @@ input[type="number"]:focus {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   color: var(--text-muted);
-  font-size: 0.8rem;
+  font-size: 1.2rem;
   font-weight: 500;
 }
 
@@ -158,6 +158,6 @@ input[type="number"]:focus {
 }
 
 .nav-item svg {
-  width: 24px;
-  height: 24px;
+  width: 36px;
+  height: 36px;
 }

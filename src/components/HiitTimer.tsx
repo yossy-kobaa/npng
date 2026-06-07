@@ -236,7 +236,7 @@ export default function HiitTimer({ onStateChange }: { onStateChange?: (running:
       justifyContent: "center",
       height: "100%",
       position: "relative",
-      padding: "24px"
+      padding: "24px 24px 0 24px"
     }}>
       {/* 確認モーダル */}
       {showConfirm && (
@@ -311,7 +311,7 @@ export default function HiitTimer({ onStateChange }: { onStateChange?: (running:
         )}
       </div>
 
-      <div style={{ width: "100%", marginTop: "auto", marginBottom: "8px" }}>
+      <div style={{ width: "100%", marginTop: "auto", marginBottom: "0px" }}>
         {phase === "idle" || phase === "done" ? (
           <button
             onClick={startTimer}
