@@ -188,7 +188,7 @@ export default function HiitTimer({ onStateChange }: { onStateChange?: (running:
   const getPhaseText = () => {
     if (isPaused) return "PAUSED";
     switch(phase) {
-      case "prep": return "GET READY";
+      case "prep": return "READY";
       case "work": return "WORK!";
       case "rest": return "REST";
       case "done": return "COMPLETED";
@@ -311,14 +311,14 @@ export default function HiitTimer({ onStateChange }: { onStateChange?: (running:
         )}
       </div>
 
-      <div style={{ width: "100%", marginTop: "auto", marginBottom: "16px" }}>
+      <div style={{ width: "100%", marginTop: "auto", marginBottom: "8px" }}>
         {phase === "idle" || phase === "done" ? (
           <button
             onClick={startTimer}
             disabled={isSubmitting}
             style={{
               width: "100%",
-              padding: "24px",
+              height: "88px",
               borderRadius: "24px",
               background: "white",
               color: "black",
@@ -326,7 +326,8 @@ export default function HiitTimer({ onStateChange }: { onStateChange?: (running:
               fontWeight: "900",
               letterSpacing: "4px",
               boxShadow: "0 12px 40px rgba(255,255,255,0.2)",
-              opacity: isSubmitting ? 0.7 : 1
+              opacity: isSubmitting ? 0.7 : 1,
+              border: "none"
             }}
           >
             {isSubmitting ? "SAVING..." : phase === "done" ? "RESTART" : "START"}
@@ -337,12 +338,12 @@ export default function HiitTimer({ onStateChange }: { onStateChange?: (running:
               onClick={togglePause}
               style={{
                 flex: 1,
-                padding: "16px",
-                borderRadius: "20px",
+                height: "88px",
+                borderRadius: "24px",
                 background: isPaused ? "var(--timer-ready)" : "var(--glass-bg)",
                 border: "1px solid var(--glass-border)",
                 color: isPaused ? "black" : "white",
-                fontSize: "1.2rem",
+                fontSize: "1.4rem",
                 fontWeight: "bold",
                 backdropFilter: "blur(12px)",
                 transition: "all 0.3s ease"
@@ -354,12 +355,12 @@ export default function HiitTimer({ onStateChange }: { onStateChange?: (running:
               onClick={handleCancelClick}
               style={{
                 flex: 1,
-                padding: "16px",
-                borderRadius: "20px",
+                height: "88px",
+                borderRadius: "24px",
                 background: "var(--glass-bg)",
                 border: "1px solid var(--glass-border)",
                 color: "var(--timer-rest)",
-                fontSize: "1.2rem",
+                fontSize: "1.4rem",
                 fontWeight: "bold",
                 backdropFilter: "blur(12px)"
               }}
